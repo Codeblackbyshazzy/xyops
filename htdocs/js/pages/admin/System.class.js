@@ -737,6 +737,10 @@ Page.System = class System extends Page.PageUtils {
 				latest: 'Latest Stable',
 				airgap: '(Air-gapped Custom)'
 			};
+			
+			// massage latest title
+			if (resp.releases && resp.releases[1]) title_map.latest += ' (' + resp.releases[1] + ')';
+			
 			var items = (resp.releases || []).map( function(release) {
 				return { id: release, title: title_map[release] || release.replace(/^v([\d\.]+)$/, 'Version $1'), icon: title_map[release] ? 'tag-text' : 'tag-text-outline' };
 			} );
@@ -827,6 +831,10 @@ Page.System = class System extends Page.PageUtils {
 			var title_map = {
 				latest: 'Latest Stable'
 			};
+			
+			// massage latest title
+			if (resp.releases && resp.releases[1]) title_map.latest += ' (' + resp.releases[1] + ')';
+			
 			var items = (resp.releases || []).map( function(release) {
 				return { id: release, title: title_map[release] || release.replace(/^v([\d\.]+)$/, 'Version $1'), icon: title_map[release] ? 'tag-text' : 'tag-text-outline' };
 			} );
