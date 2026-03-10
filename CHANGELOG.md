@@ -1,5 +1,14 @@
 # xyOps Changelog
 
+## Version v1.0.22
+
+> March 10, 2026
+
+- [`6b1f9da`](https://github.com/pixlcore/xyops/commit/6b1f9da3655932b6ac36792ef9db9a4f22282b7f): Version 1.0.22
+- [`246daa4`](https://github.com/pixlcore/xyops/commit/246daa4cbee9230d67de5c3dbc11b5de8dfab639): Feature: Display version number in brackets alongside 'Latest Stable'.  Fixes #188.
+- [`fd1a013`](https://github.com/pixlcore/xyops/commit/fd1a01305c628875fa951033940aac633d19c848): Bug Fix: Regression from v1.0.14: Default parameter values are not correctly being applied in run_event and magic APIs.  Fixes #189.
+- [`87d6b0b`](https://github.com/pixlcore/xyops/commit/87d6b0bdf01e525d393cf535e2022048543f1945): UI: Job Event Display: Use shorter "v" prefix for revision, instead of "rev.".
+
 ## Version v1.0.21
 
 > March 9, 2026
