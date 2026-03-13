@@ -23,6 +23,14 @@ process.chdir( path.dirname( __dirname ) );
 // load app's config file
 var config = require('../conf/config.json');
 
+// merge in config overrides
+if (fs.existsSync('conf/overrides.json')) {
+	var overrides = JSON.parse( fs.readFileSync('conf/overrides.json', 'utf8') );
+	for (var key in overrides) {
+		Tools.setPath( config, key, overrides[key] );
+	}
+}
+
 // shift commands off beginning of arg array
 var argv = JSON.parse( JSON.stringify(process.argv.slice(2)) );
 var commands = [];
@@ -147,6 +155,8 @@ var storage = new StandaloneStorage(config.Storage, function(err) {
 			user.salt = Tools.generateUniqueID( 64, user.username );
 			user.password = bcrypt.hashSync( user.password + user.salt );
 			user.privileges = { admin: 1 };
+			
+			Tools.mergeHashInto( user, config.default_user_prefs );
 			
 			storage.put( 'users/' + normalizeUsername(username), user, function(err) {
 				if (err) throw err;
