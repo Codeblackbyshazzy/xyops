@@ -1,5 +1,14 @@
 # xyOps Changelog
 
+## Version v1.0.24
+
+> March 13, 2026
+
+- [`dba0f3b`](https://github.com/pixlcore/xyops/commit/dba0f3b70fdce35f2a7926e63b5e9f01100e3cb6): Version 1.0.24
+	- Dependency bumps: diff to v5.2.2 and pixl-request to v2.6.2, for sub-dependency vuln patches.
+- [`c2298c9`](https://github.com/pixlcore/xyops/commit/c2298c9432e5fef637befef930aa7fb32b7abf15): Bug Fix: Prevent UI crash if event is created via API and limits / actions / triggers params are omitted.  Fixes #192.
+- [`68233ce`](https://github.com/pixlcore/xyops/commit/68233cecdab39c183091957dd12a3fcb816a0d08): Bug Fix: Race condition with logActivity and shutdown.
+
 ## Version v1.0.23
 
 > March 10, 2026
