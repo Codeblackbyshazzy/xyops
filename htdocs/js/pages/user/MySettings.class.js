@@ -157,6 +157,22 @@ Page.MySettings = class MySettings extends Page.Base {
 		html += '</div>';
 		html += '<div class="box_content" style="margin-bottom:30px">';
 		
+		// sidebar sections
+		html += this.getFormRow({
+			label: 'Sidebar:',
+			content: this.getFormMenuMulti({
+				id: 'fe_ms_sidebar',
+				title: 'Show sidebar sections',
+				placeholder: 'Select sidebar sections to show...',
+				options: config.ui.sidebar_sections,
+				values: user.sidebar || config.ui.sidebar_sections.map( section => section.id ),
+				onChange: '$P().saveChanges()',
+				'data-hold': 1,
+				'data-select-all': 1
+			}),
+			caption: 'Select which sidebar sections you would like to be visible.'
+		});
+		
 		// motion preference
 		html += this.getFormRow({
 			label: 'Motion:',
@@ -428,6 +444,7 @@ Page.MySettings = class MySettings extends Page.Base {
 		
 		this.div.html( html ).buttonize();
 		SingleSelect.init( this.div.find('#fe_ms_language, #fe_ms_region, #fe_ms_tz, #fe_ms_numformat, #fe_ms_hrcycle, #fe_ms_motionacc, #fe_ms_contrastacc') );
+		MultiSelect.init( this.div.find('#fe_ms_sidebar') );
 		this.update_date_time_preview();
 	}
 	
@@ -571,7 +588,7 @@ Page.MySettings = class MySettings extends Page.Base {
 			var tds = [
 				'<span><i class="mdi mdi-' + ((item.page_id == 'Global') ? 'earth' : 'folder-open-outline') + '">&nbsp;</i>' + item.page_id + '</span>',
 				`<button class="link icon_pad" onClick="$P().doEditHotKey(this)" data-keyid="${item.id}"><i class="mdi mdi-keyboard-outline"></i><b>${item.title}</b></button>`,
-				self.getNiceHotKeyList(item.keys) || '&nbsp;',
+				self.getNiceHotKeyList(item.keys, ' , ') || '&nbsp;',
 				item.edited ? '<i class="mdi mdi-checkbox-marked-outline"></i>' : '-',
 				`<button class="link" onClick="$P().doEditHotKey(this)" data-keyid="${item.id}"><b>Edit Keys</b></button>`
 			];
@@ -736,6 +753,7 @@ Page.MySettings = class MySettings extends Page.Base {
 			page_info: this.div.find('#fe_ms_pageinfo').is(':checked'),
 			notifications: this.div.find('#fe_ms_notify').is(':checked'),
 			effects: this.div.find('#fe_ms_effects').is(':checked'),
+			sidebar: this.div.find('#fe_ms_sidebar').val(),
 			filters: {}
 		};
 		

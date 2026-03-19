@@ -510,9 +510,21 @@ app.extend({
 			$('#tab_LogViewer').removeClass('enabled').hide();
 		}
 		
+		// apply user preferences for sidebar sections
+		var user_sections = app.user.sidebar || config.ui.sidebar_sections.map( section => section.id );
+		config.ui.sidebar_sections.forEach( function(section) {
+			var $sect = $('.sidebar .sbs_' + section.id);
+			if (user_sections.includes(section.id)) $sect.show();
+			else $sect.removeClass('enabled').hide();
+		} );
+		
 		// possibly hide entire admin section
 		if ($('#d_sidebar_admin_group > .section > .section_item.enabled').length) $('#d_sidebar_admin_group').show();
 		else $('#d_sidebar_admin_group').hide();
+		
+		// possibly hide entire shortcuts section if all items are hidden
+		if ($('.sidebar > section.sbs_shortcuts > .section_item.enabled').length) $('.sidebar > section_title.sbs_shortcuts, .sidebar > section.sbs_shortcuts').show();
+		else $('.sidebar > section_title.sbs_shortcuts, .sidebar > section.sbs_shortcuts').hide();
 		
 		// add hint to body tag for admin UI hints
 		if (this.isAdmin()) $('body').addClass('admin');

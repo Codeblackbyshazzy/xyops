@@ -1692,6 +1692,7 @@ A user account is a representation of an individual user within the system.  The
 			"loc": "Search?result=critical"
 		}
 	],
+	"sidebar": ["main", "job_searches", "ticket_searches", "shortcuts", "scheduler", "monitoring", "settings", "admin", "help"],
 	"timezone": "",
 	"username": "bluetiger469",
 	"volume": 7
@@ -1793,6 +1794,14 @@ A list of roles assigned to the user.  See [Role](#role).
 ### User.searches
 
 A list of search presets for the user.
+
+### User.sidebar
+
+An array of all the sidebar sections to show in the UI for the user.  The default full set is:
+
+```json
+["main", "job_searches", "ticket_searches", "shortcuts", "scheduler", "monitoring", "settings", "admin", "help"]
+```
 
 ## WebHook
 

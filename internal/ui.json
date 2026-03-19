@@ -1335,6 +1335,18 @@
 		"data": "Data"
 	},
 	
+	"sidebar_sections": [
+		{ "id": "main", "title": "Main", "icon": "home" },
+		{ "id": "job_searches", "title": "Job Searches", "icon": "account-search-outline" },
+		{ "id": "ticket_searches", "title": "Ticket Searches", "icon": "text-box-search-outline" },
+		{ "id": "shortcuts", "title": "Shortcuts", "icon": "hand-pointing-right" },
+		{ "id": "scheduler", "title": "Scheduler", "icon": "calendar-multiple" },
+		{ "id": "monitoring", "title": "Monitoring", "icon": "camera-outline" },
+		{ "id": "settings", "title": "Settings", "icon": "cogs" },
+		{ "id": "admin", "title": "Admin", "icon": "lock" },
+		{ "id": "help", "title": "Help", "icon": "help-network-outline" }
+	],
+	
 	"satellite_install_menu": [
 		{ "id": "standard", "title": "Linux", "icon": "penguin" },
 		{ "id": "macos", "title": "macOS", "icon": "apple" },

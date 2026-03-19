@@ -520,6 +520,8 @@ See [Privileges](privileges.md) for more details on privileges.
 
 This object sets default UI preferences for new users (locale, theme, motion/contrast, volume, saved searches, etc.), merged into profiles at creation/login.
 
+See [User](data.md#user) for details on what properties can be specified here.
+
 
 
 ## db_maint
