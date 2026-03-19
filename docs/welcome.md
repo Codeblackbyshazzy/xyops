@@ -2,7 +2,7 @@
 
 xyOps is a job scheduler, workflow automation engine, and server monitoring platform. It lets you run jobs on your servers, orchestrate them visually with workflows, collect metrics, trigger runs on schedules or intervals, and react with actions and limits. Everything is available in the web UI and via the REST API.
 
-This guide is shown on first sign-in to help you take your first steps, and introduce some core concepts.  You can always get back to it later by clicking on "Documentation" in the sidebar, then "Welcome to xyOps".
+This guide is shown on the dashboard for new users to help you take your first steps, and introduce some core concepts.  It will disappear as soon as you create your first event.  You can always get back to it later by clicking on "Documentation" in the sidebar, then "Welcome to xyOps".
 
 
 ## Step 1: Add a Server
