@@ -17,7 +17,7 @@ if [ ! -f /opt/xyops/conf/config.json ]; then
 	echo "Initializing config directory..."
 	mkdir -p /opt/xyops/conf
 	cp -a /opt/xyops/sample_conf/. /opt/xyops/conf/
-	secret_key=$(openssl rand -hex 16)
+	secret_key=$(openssl rand -hex 32)
 	printf '{ "secret_key": "%s" }\n' "$secret_key" > /opt/xyops/conf/overrides.json
 fi
 
