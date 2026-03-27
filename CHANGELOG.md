@@ -1,5 +1,21 @@
 # xyOps Changelog
 
+## Version v1.0.41
+
+> March 27, 2026
+
+- [`ab845e5`](https://github.com/pixlcore/xyops/commit/ab845e5ee0978cbad7a0eb7a8e89a71a121830a4): Version 1.0.41
+	- Bump pixl-tools for upstream vuln fix in picomatch.
+	- Bump pixl-mail for upstream vuln fix in nodemailer.
+- [`9613fd1`](https://github.com/pixlcore/xyops/commit/9613fd1a6b468d0187e387830e6898051f99e2ec): Marketplace UI: Lazy-load thubmnails from GitHub as to not exceed limits.
+- [`c01e541`](https://github.com/pixlcore/xyops/commit/c01e5416d0cd8adcaae760e48d749916fd6a5f98): Feature: Global "client.hide_sidebar_sections" will force-hide specific sidebar sections for all users, regardless of their prefs.
+- [`269458f`](https://github.com/pixlcore/xyops/commit/269458f6952c46605b2a307a819f0b9dc400e931): Feature: Marketplace: Allow quick setup / editing of secret vaults for installed plugins.
+- [`b4e3169`](https://github.com/pixlcore/xyops/commit/b4e3169f62e405394309bc9ddd3e0bf026446667): CSS UI Tweak: Adjust max select menu height slightly, as certain positions can cause it to extend beyond the screen bounds.
+- [`0bff664`](https://github.com/pixlcore/xyops/commit/0bff664658430da083a24951d74db4406f7c9713): UI Tweak: Sort secret vaults by title.
+- [`ca7b032`](https://github.com/pixlcore/xyops/commit/ca7b03272ac6b91652c56877a905ce1d3360d142): CSS UI Tweak: Fix background color in plugin/event param select menus on light theme.
+- [`67d4e94`](https://github.com/pixlcore/xyops/commit/67d4e94a9d3200def3eb422811233e117e3edbb7): README: Add bind mount for xyops config in docker example command.
+- [`69fa782`](https://github.com/pixlcore/xyops/commit/69fa78235b10fdec136b7f8610bd3cd1ed9d64c8): Hosting Doc: Add missing bind mount for config dir in quick-start docker run command.
+
 ## Version v1.0.40
 
 > March 24, 2026
