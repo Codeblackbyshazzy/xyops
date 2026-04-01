@@ -5737,6 +5737,120 @@ Example response:
 
 
 
+## Multi
+
+### master_register
+
+```
+POST /api/app/master_register/v1
+```
+
+Internal only.  This endpoint is part of the multi-conductor election and registration flow, and is used by conductors to discover the current primary and authenticate peers.  It does **not** use user sessions or API Keys.  Instead, peer authentication is performed using a cryptographic hash of the shared [secret_key](config.md#secret_key).
+
+Parameters:
+
+| Property Name | Type | Description |
+|---------------|------|-------------|
+| `host` | String | **(Required)** Host ID of the conductor attempting to register.  This must be the conductor hostname only, with no port. |
+| `auth` | String | **(Required)** Lowercase hex SHA-256 digest of `host + secret_key`. |
+
+Example request:
+
+```json
+{
+	"host": "xyops02.internal.example.com",
+	"auth": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+}
+```
+
+Example response:
+
+```json
+{
+	"code": 0,
+	"master": true
+}
+```
+
+In addition to the [Standard Response Format](#standard-response-format), this returns a `master` boolean indicating whether the contacted conductor is currently the primary.
+
+Notes:
+
+- This endpoint may be called on either a primary or backup conductor.
+- If the target conductor is primary and the requesting `host` is not already present in the cluster master list, the peer is added to the cluster automatically.
+- If the requesting conductor contacts itself, the API returns a `duplicate` error.  This usually indicates duplicate entries in `masters.json` (or the configured multi master list file).
+- If the shared secret does not match, the API returns an `auth` error.
+
+### get_master_releases
+
+```
+GET /api/app/get_master_releases/v1
+```
+
+Fetch the list of official xyOps release tags from the origin configured in [multi](config.md#multi) (usually GitHub).  Requires a valid user session or API Key.
+
+No input parameters.
+
+Example response:
+
+```json
+{
+	"code": 0,
+	"releases": ["latest", "v1.2.3", "v1.2.2"]
+}
+```
+
+In addition to the [Standard Response Format](#standard-response-format), this returns a `releases` array.  The first element is always `latest`, followed by the discovered release tags.
+
+Notes:
+
+- This uses the configured release metadata URL from the [multi](config.md#multi) settings, typically GitHub.
+- Responses are cacheable, using `multi.cache_ttl` if configured, otherwise `3600` seconds.
+- This endpoint is used by the Conductors and System admin UI to highlight outdated conductors and populate upgrade menus.
+- A canned response will be returned if [Air-Gapped Mode](hosting.md#air-gapped-mode) is enabled.
+
+### master_command
+
+```
+POST /api/app/master_command/v1
+```
+
+Send a control command to a conductor server.  Admin only.  Requires a valid administrator session or API Key.  The request must be sent as an HTTP POST with a JSON body.
+
+Parameters:
+
+| Property Name | Type | Description |
+|---------------|------|-------------|
+| `host` | String | **(Required)** Host ID of the target conductor.  This must be the conductor hostname only, with no port. |
+| `commands` | Array(String) | **(Required)** Command array to run.  The first element must be one of `stop` (shutdown), `restart`, `upgrade`, or `remove`.  For `upgrade`, an optional second element may specify a release tag such as `v1.2.3`; otherwise the latest stable release is used. |
+
+Example request:
+
+```json
+{
+	"host": "xyops02.internal.example.com",
+	"commands": ["restart"]
+}
+```
+
+Example response:
+
+```json
+{
+	"code": 0
+}
+```
+
+Notes:
+
+- The API returns after the command is dispatched.  It does not wait for the remote conductor to finish restarting, shutting down, or upgrading.
+- Non-`remove` commands require the target backup conductor to be online.  Otherwise the API returns an error.
+- If `host` matches the current primary conductor, the command is executed locally.  However, `remove` is rejected for the current primary.
+- `remove` updates the cluster master list immediately, and if the target conductor is online xyOps first sends it a `stop` command before removing it from the cluster.
+- Local commands ultimately execute through `bin/control.sh`, and command arguments are sanitized before execution.
+
+
+
 ## Satellite
 
 These APIs handle xySat bootstrap, install, upgrade, and release discovery.  Unlike most xyOps APIs, the `satellite` endpoint family serves plain-text scripts, tarballs, and JSON config files rather than the standard JSON response envelope on success.
