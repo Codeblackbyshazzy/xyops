@@ -1,6 +1,6 @@
 {
 	"name": "xyops",
-	"version": "1.0.42",
+	"version": "1.0.43",
 	"private": true,
 	"description": "A complete workflow automation and server monitoring system.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
@@ -29,6 +29,9 @@
 		"monitor",
 		"webapp"
 	],
+	"overrides": {
+		"lodash": "4.17.23"
+	},
 	"dependencies": {
 		"@mdi/font": "7.4.47",
 		"@mdi/svg": "7.4.47",
@@ -58,7 +61,7 @@
 		"pixl-perf": "^1.0.6",
 		"pixl-request": "^2.6.2",
 		"pixl-resize": "^1.0.0",
-		"pixl-server": "^1.0.23",
+		"pixl-server": "^1.0.50",
 		"pixl-server-api": "^1.0.8",
 		"pixl-server-storage": "^4.0.2",
 		"pixl-server-unbase": "^1.0.3",
