@@ -5871,7 +5871,7 @@ GET /api/app/get_master_releases/v1
 
 Fetch the list of official xyOps release tags from the origin configured in [multi](config.md#multi) (usually GitHub).  Requires a valid user session or API Key.
 
-No input parameters.
+The API accepts one optional `verbose` parameter, which if set to `true` will include the full response from the upstream provider in a `data` property.
 
 Example response:
 
@@ -5882,7 +5882,7 @@ Example response:
 }
 ```
 
-In addition to the [Standard Response Format](#standard-response-format), this returns a `releases` array.  The first element is always `latest`, followed by the discovered release tags.
+In addition to the [Standard Response Format](#standard-response-format), this returns a `releases` array.  The first element is always `latest`, followed by the discovered release tags.  If `verbose` is specified, a `data` object will also be included, containing the full upstream provider response.
 
 Notes:
 
@@ -6001,7 +6001,7 @@ GET /api/app/get_satellite_releases/v1
 
 Fetch the list of official xySat release tags from the origin configured in [satellite](config.md#satellite) (usually GitHub).  Requires a valid user session or API Key.
 
-No input parameters.
+The API accepts one optional `verbose` parameter, which if set to `true` will include the full response from the upstream provider in a `data` property.
 
 Example response:
 
@@ -6012,7 +6012,7 @@ Example response:
 }
 ```
 
-In addition to the [Standard Response Format](#standard-response-format), this returns a `releases` array.  The first element is always `latest`, followed by the discovered release tags.
+In addition to the [Standard Response Format](#standard-response-format), this returns a `releases` array.  The first element is always `latest`, followed by the discovered release tags.  If `verbose` is specified, a `data` object will also be included, containing the full upstream provider response.
 
 Notes:
 
