@@ -1707,7 +1707,10 @@ Page.Job = class Job extends Page.PageUtils {
 			if (job.html.caption) html += '<div class="user_caption">' + encode_entities(job.html.caption) + '</div>';
 			$html.find('div.box_content').html( html );
 			
-			if (html.match(/\bmarkdown-body\b/)) this.highlightCodeBlocks( $html.find('div.box_content') );
+			if (html.match(/\bmarkdown-body\b/)) {
+				this.highlightCodeBlocks( $html.find('div.box_content') );
+				$html.find('div.box_content').css('font-size', '14px');
+			}
 		} // html
 		
 		if (job.perf) this.updateUserPerf();
