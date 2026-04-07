@@ -1373,6 +1373,7 @@ app.extend({
 	onKeyDown(event) {
 		// route hot key to page
 		if (!this.page_manager || !this.page_manager.current_page_id) return;
+		if (!event || !event.key || !event.key.match) return; // sanity
 		
 		var page_id = this.page_manager.current_page_id;
 		var page = this.page_manager.find(page_id);
