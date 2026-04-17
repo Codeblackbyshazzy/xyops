@@ -6,7 +6,7 @@ Single Sign-On (SSO) is a mechanism for outsourcing the xyOps user authenticatio
 
 Configuring SSO is a complex, highly technical process that requires careful coordination between identity providers, certificates, middleware, and application settings.  It is easy to get things wrong and expose security holes in your system.  While we provide all necessary documentation here, we strongly recommend our [Enterprise Plan](https://xyops.io/pricing). This gives you access to our white-glove onboarding service, where our team will guide you through every step, validate your configuration, and ensure your integration is both secure and reliable.  This also gets you priority ticket support, and live chat support from a xyOps engineer.
 
-xyOps uses the "trusted headers" implementation for SSO, allowing for easy integration with several authentication tools and middlewares.  These include [OAuth2-Proxy](https://github.com/oauth2-proxy/oauth2-proxy), [Vouch](https://github.com/vouch/vouch-proxy), [Authelia](https://github.com/authelia/authelia), and [Authentik](https://github.com/goauthentik/authentik), among others.  It also supports [Tailscale](https://tailscale.com/) (i.e. [Tailscale Serve](https://tailscale.com/kb/1312/serve)) which forwards headers in the same way.
+xyOps uses the "trusted headers" implementation for SSO, allowing for easy integration with several authentication tools and middlewares.  These include [OAuth2-Proxy](https://github.com/oauth2-proxy/oauth2-proxy), [Vouch](https://github.com/vouch/vouch-proxy), [Authelia](https://github.com/authelia/authelia), and [Authentik](https://github.com/goauthentik/authentik), among others.  It also supports [Tailscale](tailscale.md) (i.e. [Tailscale Serve](https://tailscale.com/kb/1312/serve)) which forwards headers in the same way.
 
 The trusted header flow works as follows:
 
@@ -131,7 +131,9 @@ All the SSO settings for xyOps are contained in the `/opt/xyops/conf/sso.json` f
 	"replace_roles": false,
 	"replace_privileges": false,
 	"admin_bootstrap": "",
-	"logout_url": ""
+	"logout_url": "",
+	"command": "",
+	"preset": ""
 }
 ```
 
@@ -152,6 +154,7 @@ Here are descriptions of all the SSO properties:
 | `admin_bootstrap` | String | Temporarily assign full administrator privileges to a given user.  This is used for bootstrapping the system on initial setup.  See [Admin Bootstrap](#admin-bootstrap) for more. |
 | `logout_url` | String | Set this to the URL to redirect the user to after xyOps performs its own logout.  See [Logging Out](#logging-out) below for details. |
 | `command` | String | Optional custom shell command to filter all incoming SSO requests and inject headers.  See [Custom Command](#custom-command) below for details. |
+| `preset` | String | Optional preset ID which pre-configures SSO for specific providers.  Currently used for [Tailscale](tailscale.md). |
 
 ### Header Map
 
@@ -583,25 +586,7 @@ Authelia can also be [integrated with Nginx](https://www.authelia.com/integratio
 
 ## Tailscale
 
-xyOps works with [Tailscale](https://tailscale.com/) (specifically [Tailscale Serve](https://tailscale.com/kb/1312/serve)), which acts as an SSO auth system by forwarding trusted headers.  Here is how you should configure your [Header Map](#header-map) for Tailscale Serve use:
-
-```json
-"header_map": {
-	"username": "Tailscale-User-Login",
-	"full_name": "Tailscale-User-Name",
-	"email": "Tailscale-User-Login",
-	"avatar": "Tailscale-User-Profile-Pic",
-	"groups": ""
-}
-```
-
-Tailscale doesn't forward along user groups, so we cannot auto-assign user roles or privileges.  However, you can use the [Admin Bootstrap](#admin-bootstrap) feature to make yourself a full administrator, and then manually promote your other users once they login and have local xyOps user accounts.  Also, please read the [Header Cleanup](#header-cleanup) section regarding username cleanup, so you can be sure how your Tailscale username (which comes in an an email address) will be translated on the xyOps side.
-
-Finally, make sure you set your [IP Whitelist](#ip-whitelist) to only accept headers from localhost, as that is how Tailscale Serve routes traffic:
-
-```json
-"whitelist": ["127.0.0.1", "::1/128"]
-```
+See our dedicated [Tailscale Guide](tailscale.md) to set up xyOps with Tailscale.
 
 ## Custom Command
 

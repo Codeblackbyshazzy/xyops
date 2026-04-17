@@ -55,6 +55,7 @@ Welcome to the xyOps documentation. xyOps is a job scheduler, workflow engine, a
 - **[Users and Roles](users.md)**: Account model, roles, resource restrictions, preferences, and avatars.
 - **[Privileges](privileges.md)**: Full list of privileges and what each grants across the application.
 - **[SSO Setup](sso.md)**: Single Sign-On integration and external identity provider setup.
+- **[Tailscale](tailscale.md)**: Guide specifically for using Tailscale as an SSO provider.
 
 ## File Formats and Protocols
 

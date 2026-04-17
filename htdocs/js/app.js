@@ -235,6 +235,8 @@ app.extend({
 	
 	handleConfigError: function(resp) {
 		// handle config error (i.e. "master")
+		if (resp.config) window.config = resp.config;
+		
 		if (!resp.host) {
 			Dialog.showProgress( 1.0, "Waiting for Conductor Server..." );
 			setTimeout( function() { load_script('/api/app/config'); }, 5000 );
@@ -244,18 +246,26 @@ app.extend({
 		// user landed on a backup server, or other error
 		Dialog.hide();
 		
-		var html = '';
+		this.initPrefs();
+		this.initTheme();
+		this.initAccessibility();
 		
-		html += '<div class="dialog inline">';
-			html += '<div class="dialog_title" style="color:var(--red)">' + (resp.title || 'An Error Occurred') + '</div>';
-			html += '<div class="box_content">' + resp.description + '</div>';
+		var html = '';
+		var is_error = !resp.type || (resp.type == 'error');
+		var title_style = '';
+		if (is_error) title_style = 'color:var(--red)';
+		
+		html += '<div class="dialog inline wider">';
+			html += '<div class="dialog_title" style="font-size:16px; ' + title_style + '">' + strip_html(resp.title || 'An Error Occurred') + '</div>';
+			html += '<div class="box_content" style="font-size:14px; line-height:18px;">' + strip_html(resp.description) + '</div>';
 		html += '</div>';
 		
 		$('div.main').html(html);
 		
-		app.setWindowTitle( "Error" );
+		app.showSidebar(false);
+		app.setWindowTitle( strip_html(resp.title || "Error") );
 		// app.setHeaderTitle( '<i class="mdi mdi-alert-circle-outline">&nbsp;</i>Error' );
-		$('div.header_title').addClass('error');
+		if (is_error) $('div.header_title').addClass('error');
 		$('body').addClass('login');
 		
 		if (resp.version) $('#d_footer_version').html( "Version " + resp.version );
