@@ -1442,7 +1442,7 @@ Page.ServerUtils = class ServerUtils extends Page.PageUtils {
 			
 			var tds = [
 				'<span style="font-weight:bold">' + color_swatch + self.getNiceServer(item, true) + '</span>',
-				self.getNiceIP(item.ip),
+				self.getNiceIP(item.info.ip || item.ip),
 				self.getNiceGroupList(item.groups),
 				'<i class="mdi mdi-chip">&nbsp;</i>' + (item.info.cpu.cores || 0),
 				'<i class="mdi mdi-memory">&nbsp;</i>' + get_text_from_bytes(item.info.memory.total || 0),
@@ -1530,7 +1530,7 @@ Page.ServerUtils = class ServerUtils extends Page.PageUtils {
 		if (!is_filtered) return true; // show
 		
 		if (('search' in args) && args.search.length) {
-			var words = [item.title || '', item.hostname, item.ip, item.info.os.distro, item.info.os.release].join(' ').toLowerCase();
+			var words = [item.title || '', item.hostname, item.info.ip || item.ip, item.info.os.distro, item.info.os.release].join(' ').toLowerCase();
 			if (words.indexOf(args.search.toLowerCase()) == -1) return false; // hide
 		}
 		

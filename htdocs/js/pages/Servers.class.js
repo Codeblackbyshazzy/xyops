@@ -121,7 +121,7 @@ Page.Servers = class Servers extends Page.ServerUtils {
 				info: item.info,
 				offline: item.offline,
 				label: (item.title || item.hostname).toLowerCase(), // for sorting
-				ip: item.ip,
+				ip: item.info.ip || item.ip,
 				autoGroup: item.autoGroup,
 				groups: item.groups,
 				grp_labels: grp_labels, // for sorting
@@ -179,7 +179,7 @@ Page.Servers = class Servers extends Page.ServerUtils {
 			
 			var tds = [
 				'<span style="font-weight:bold">' + self.getNiceServer(item, true) + '</span>',
-				self.getNiceIP(item.ip),
+				self.getNiceIP(item.info.ip || item.ip),
 				self.getNiceGroupList(item.groups, '', item.autoGroup ? '' : 'gesture-tap-button'),
 				'<i class="mdi mdi-chip">&nbsp;</i>' + (item.info.cpu.cores || 0),
 				'<i class="mdi mdi-memory">&nbsp;</i>' + get_text_from_bytes(item.info.memory.total || 0),
@@ -723,7 +723,7 @@ Page.Servers = class Servers extends Page.ServerUtils {
 		html += this.getPaginatedGrid( grid_args, function(item, idx) {
 			return [
 				'<b>' + self.getNiceServer(item, true) + '</b>',
-				self.getNiceIP(item.ip),
+				self.getNiceIP(item.info.ip || item.ip),
 				self.getNiceGroupList(item.groups),
 				'<i class="mdi mdi-chip">&nbsp;</i>' + (item.info.cpu.cores || 0),
 				'<i class="mdi mdi-memory">&nbsp;</i>' + get_text_from_bytes(item.info.memory.total || 0),
@@ -877,7 +877,7 @@ Page.Servers = class Servers extends Page.ServerUtils {
 					
 					html += '<div>';
 						html += '<div class="info_label">Server IP</div>';
-						html += '<div class="info_value">' + this.getNiceIP(server.ip) + '</div>';
+						html += '<div class="info_value">' + this.getNiceIP(server.info.ip || server.ip) + '</div>';
 					html += '</div>';
 					
 					html += '<div>';
