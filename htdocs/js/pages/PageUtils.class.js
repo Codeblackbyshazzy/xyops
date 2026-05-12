@@ -2040,7 +2040,9 @@ Page.PageUtils = class PageUtils extends Page.Base {
 			show_condition: true,
 			
 			action_type_filter: function(item) { 
-				return !item.id.match(/^(suspend)$/); 
+				// JH 2026-05-12 experiment: allowing suspend at the event level
+				// return !item.id.match(/^(suspend)$/); 
+				return true;
 			},
 			
 			callback: function(action) {
