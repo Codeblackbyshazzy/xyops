@@ -2660,6 +2660,11 @@ Page.Base = class Base extends Page {
 					else html += self.getNiceBucket(param.bucket_id);
 				break;
 				
+				case 'system':
+					html += '<i class="link mdi mdi-' + elem_icon + '" onClick="$P().copyPluginParamValue(this)" title="Copy to Clipboard">&nbsp;</i>';
+					html += '<span class="data_value">' + encode_entities( elem_value.toString() || '(None)' ) + '</span>';
+				break;
+				
 				case 'toolset':
 					if (!param.data) param.data = {};
 					if (!param.data.tools) param.data.tools = [];

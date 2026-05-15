@@ -1042,6 +1042,7 @@
 		"checkbox": "Checkbox",
 		"select": "Menu",
 		"bucket": "Bucket Menu",
+		"system": "System Menu",
 		"hidden": "Hidden",
 		"toolset": "Toolset"
 	},
@@ -1054,6 +1055,7 @@
 		"checkbox": "checkbox-marked-outline",
 		"select": "form-dropdown",
 		"bucket": "pail-outline",
+		"system": "list-box-outline",
 		"hidden": "eye-off-outline",
 		"toolset": "tools"
 	},
