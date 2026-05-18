@@ -2603,6 +2603,12 @@ Page.Base = class Base extends Page {
 			html += '<div class="info_label">' + (param.locked ? '<i class="mdi mdi-lock-outline">&nbsp;</i>' : '') + strip_html(param.title) + '</div>';
 			html += '<div class="info_value">';
 			
+			if (param.type.match(/^(select|bucket|system)$/)) {
+				// special value handling for menus
+				if (param.multiple) elem_value = (param.id in params) ? always_array(params[param.id]).join(', ') : '';
+				else elem_value = (param.id in params) ? always_string(params[param.id]) : '';
+			}
+			
 			switch (param.type) {
 				case 'text':
 					if (param.id in params) {
@@ -2642,20 +2648,20 @@ Page.Base = class Base extends Page {
 				
 				case 'select':
 					html += '<i class="link mdi mdi-' + elem_icon + '" onClick="$P().copyPluginParamValue(this)" title="Copy to Clipboard">&nbsp;</i>';
-					html += '<span class="data_value">' + encode_entities( elem_value.toString().replace(/\,.*$/, '').replace(/^.+\[([\w\-\.]+)\]\s*$/, '$1') ) + '</span>';
+					html += '<span class="data_value">' + encode_entities( str_value(elem_value) || '(None)') + '</span>';
 				break;
 				
 				case 'bucket':
 					if (elem_value.toString().length) {
 						html += '<i class="link mdi mdi-' + elem_icon + '" onClick="$P().copyPluginParamValue(this)" title="Copy to Clipboard">&nbsp;</i>';
-						html += '<span class="data_value">' + encode_entities( elem_value ) + '</span>';
+						html += '<span class="data_value">' + encode_entities( str_value(elem_value) || '(None)' ) + '</span>';
 					}
 					else html += self.getNiceBucket(param.bucket_id);
 				break;
 				
 				case 'system':
 					html += '<i class="link mdi mdi-' + elem_icon + '" onClick="$P().copyPluginParamValue(this)" title="Copy to Clipboard">&nbsp;</i>';
-					html += '<span class="data_value">' + encode_entities( elem_value.toString() || '(None)' ) + '</span>';
+					html += '<span class="data_value">' + encode_entities( str_value(elem_value) || '(None)' ) + '</span>';
 				break;
 				
 				case 'toolset':
