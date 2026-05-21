@@ -1679,6 +1679,11 @@ body.dark .dialog .plugin_param_editor_cont {
 	left: 4px;
 }
 
+.form_row input[type="color"] {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
 /* Job Details Page */
 
 .summary_grid {
