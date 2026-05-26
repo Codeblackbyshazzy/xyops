@@ -145,9 +145,9 @@ Page.Workflows = class Workflows extends Page.Events {
 		
 		// render workflow editor
 		html += this.get_wf_editor_html(`
-			<div class="button primary right tablet_collapse" id="btn_save" title="${config.ui.buttons.wf_new_save}" onClick="$P().do_new_workflow()"><i class="mdi mdi-floppy">&nbsp;</i><span>${config.ui.buttons.wf_new_save}<span></div>
-			<div class="button secondary right mobile_collapse mobile_hide" title="${config.ui.buttons.export}" onClick="$P().do_export_current()"><i class="mdi mdi-cloud-download-outline">&nbsp;</i><span>${config.ui.buttons.export}</span></div>
-			<div class="button right mobile_collapse" title="${config.ui.buttons.cancel}" onClick="$P().cancel_workflow_edit()"><i class="mdi mdi-close-circle-outline">&nbsp;</i><span>${config.ui.buttons.cancel}</span></div>
+			<div class="button primary tablet_collapse" id="btn_save" title="${config.ui.buttons.wf_new_save}" onClick="$P().do_new_workflow()"><i class="mdi mdi-floppy">&nbsp;</i><span>${config.ui.buttons.wf_new_save}<span></div>
+			<div class="button secondary mobile_collapse tablet_hide" title="${config.ui.buttons.export}" onClick="$P().do_export_current()"><i class="mdi mdi-cloud-download-outline">&nbsp;</i><span>${config.ui.buttons.export}</span></div>
+			<div class="button mobile_collapse" title="${config.ui.buttons.cancel}" onClick="$P().cancel_workflow_edit()"><i class="mdi mdi-close-circle-outline">&nbsp;</i><span>${config.ui.buttons.cancel}</span></div>
 		`);
 		
 		this.div.html( html ).buttonize();
@@ -158,7 +158,7 @@ Page.Workflows = class Workflows extends Page.Events {
 		this.renderParamEditor();
 		// this.updateAddRemoveMe('#fe_wf_email');
 		$('#fe_wf_title').focus();
-		// this.setupBoxButtonFloater();
+		this.setupBoxButtonFloater();
 		
 		this.setupWorkflowEditor();
 	}
@@ -247,12 +247,12 @@ Page.Workflows = class Workflows extends Page.Events {
 		
 		// render workflow editor
 		html += this.get_wf_editor_html(`
-			<div class="button save right tablet_collapse" id="btn_save" title="${config.ui.buttons.save_changes}" onClick="$P().do_save_workflow()"><i class="mdi mdi-floppy">&nbsp;</i><span>${config.ui.buttons.save_changes}</span></div>
-			<div class="button secondary right early_collapse mobile_hide" title="${config.ui.buttons.history}" onClick="$P().go_edit_history()"><i class="mdi mdi-history">&nbsp;</i><span>${config.ui.buttons.history}</span></div>
-			<div class="button secondary right early_collapse mobile_hide" title="${config.ui.buttons.export}" onClick="$P().do_export_current()"><i class="mdi mdi-cloud-download-outline">&nbsp;</i><span>${config.ui.buttons.export}</span></div>
-			<div class="button secondary right early_collapse mobile_hide" title="${config.ui.buttons.clone}" onClick="$P().do_clone()"><i class="mdi mdi-content-copy">&nbsp;</i><span>${config.ui.buttons.clone}</span></div>
-			<div class="button danger right early_collapse mobile_hide" title="${config.ui.buttons.delete}" onClick="$P().show_delete_event_dialog()"><i class="mdi mdi-trash-can-outline">&nbsp;</i><span>${config.ui.buttons.delete}</span></div>
-			<div class="button cancel right early_collapse" title="${config.ui.buttons.close}" onClick="$P().cancel_workflow_edit()"><i class="mdi mdi-close-circle-outline">&nbsp;</i><span>${config.ui.buttons.close}</span></div>
+			<div class="button save tablet_collapse" id="btn_save" title="${config.ui.buttons.save_changes}" onClick="$P().do_save_workflow()"><i class="mdi mdi-floppy">&nbsp;</i><span>${config.ui.buttons.save_changes}</span></div>
+			<div class="button secondary early_collapse early_hide" title="${config.ui.buttons.history}" onClick="$P().go_edit_history()"><i class="mdi mdi-history">&nbsp;</i><span>${config.ui.buttons.history}</span></div>
+			<div class="button secondary early_collapse early_hide" title="${config.ui.buttons.export}" onClick="$P().do_export_current()"><i class="mdi mdi-cloud-download-outline">&nbsp;</i><span>${config.ui.buttons.export}</span></div>
+			<div class="button secondary early_collapse early_hide" title="${config.ui.buttons.clone}" onClick="$P().do_clone()"><i class="mdi mdi-content-copy">&nbsp;</i><span>${config.ui.buttons.clone}</span></div>
+			<div class="button danger early_collapse early_hide" title="${config.ui.buttons.delete}" onClick="$P().show_delete_event_dialog()"><i class="mdi mdi-trash-can-outline">&nbsp;</i><span>${config.ui.buttons.delete}</span></div>
+			<div class="button cancel early_collapse" title="${config.ui.buttons.close}" onClick="$P().cancel_workflow_edit()"><i class="mdi mdi-close-circle-outline">&nbsp;</i><span>${config.ui.buttons.close}</span></div>
 		`);
 		
 		this.div.html( html ).buttonize();
@@ -263,7 +263,7 @@ Page.Workflows = class Workflows extends Page.Events {
 		this.renderParamEditor();
 		// this.updateAddRemoveMe('#fe_wf_email');
 		// $('#fe_wf_title').focus();
-		// this.setupBoxButtonFloater();
+		this.setupBoxButtonFloater();
 		this.setupWorkflowEditor();
 		this.setupEditTriggers();
 		
@@ -2836,19 +2836,19 @@ Page.Workflows = class Workflows extends Page.Events {
 		</div>`;
 		
 		html += `<div class="wf_grid_footer">
-			<div class="button icon left disabled" id="d_btn_wf_undo" onClick="$P().doUndo()" title="${config.ui.tooltips.wf_undo}"><i class="mdi mdi-undo"></i></div>
-			<div class="button icon left disabled" id="d_btn_wf_redo" onClick="$P().doRedo()" title="${config.ui.tooltips.wf_redo}"><i class="mdi mdi-redo"></i></div>
-			<div class="wf_button_separator left"></div>
-			<div class="button icon left" id="d_btn_wf_tool_draw" onClick="$P().selectTool('draw')" title="${config.ui.tooltips.wf_tool_draw}"><i class="mdi mdi-cursor-default-outline"></i></div>
-			<div class="button icon left" id="d_btn_wf_tool_move" onClick="$P().selectTool('move')" title="${config.ui.tooltips.wf_tool_move}"><i class="mdi mdi-cursor-move"></i></div>
-			<div class="wf_button_separator left"></div>
+			<div class="button icon left disabled mobile_hide" id="d_btn_wf_undo" onClick="$P().doUndo()" title="${config.ui.tooltips.wf_undo}"><i class="mdi mdi-undo"></i></div>
+			<div class="button icon left disabled mobile_hide" id="d_btn_wf_redo" onClick="$P().doRedo()" title="${config.ui.tooltips.wf_redo}"><i class="mdi mdi-redo"></i></div>
+			<div class="wf_button_separator left mobile_hide"></div>
+			<div class="button icon left mobile_hide" id="d_btn_wf_tool_draw" onClick="$P().selectTool('draw')" title="${config.ui.tooltips.wf_tool_draw}"><i class="mdi mdi-cursor-default-outline"></i></div>
+			<div class="button icon left mobile_hide" id="d_btn_wf_tool_move" onClick="$P().selectTool('move')" title="${config.ui.tooltips.wf_tool_move}"><i class="mdi mdi-cursor-move"></i></div>
+			<div class="wf_button_separator left mobile_hide"></div>
 			<div class="button icon left" onClick="$P().wfZoomAuto()" title="${config.ui.tooltips.wf_zoom_auto}"><i class="mdi mdi-home"></i></div>
 			<div class="button icon left" id="d_btn_wf_zoom_out" onClick="$P().wfZoomOut()" title="${config.ui.tooltips.wf_zoom_out}"><i class="mdi mdi-magnify-minus"></i></div>
 			<div class="button icon left" id="d_btn_wf_zoom_in" onClick="$P().wfZoomIn()" title="${config.ui.tooltips.wf_zoom_in}"><i class="mdi mdi-magnify-plus"></i></div>
 			<div class="wf_zoom_msg left tablet_hide"></div>
 			<div class="wf_button_separator left"></div>
 			
-			${btns}
+			<div class="wf_footer_buttons">${btns}</div>
 			
 			<div class="clear"></div>
 		</div>`;
@@ -2879,6 +2879,65 @@ Page.Workflows = class Workflows extends Page.Events {
 		}
 		
 		return event;
+	}
+	
+	setupBoxButtonFloater(initially_visible) {
+		// float box buttons if original is offscreen
+		if (app.mobile) return;
+		
+		this.firstBox = this.div.find('div.box').first();
+		this.boxButtons = this.div.find('.wf_footer_buttons').last();
+		
+		// delete previous if leftover
+		if (this.boxFloater) this.boxFloater.remove();
+		
+		var $copy = this.boxButtons.clone();
+		$copy.addClass('floater');
+		if (!initially_visible) $copy.addClass('hidden').addClass('gone');
+		this.div.append( $copy );
+		
+		this.boxFloater = $copy;
+		this.updateBoxButtonFloaterState();
+		this.updateBoxButtonFloaterPosition();
+	}
+	
+	updateBoxButtonFloaterPosition() {
+		// update position of floater, called on resize
+		if (!this.boxButtons || !this.boxFloater) return;
+		
+		var cont = this.firstBox[0].getBoundingClientRect();
+		var box = this.boxFloater[0].getBoundingClientRect();
+		this.boxFloater.css({ left: cont.left, top: window.innerHeight - box.height, width: cont.width });
+	}
+	
+	updateBoxButtonFloaterState() {
+		// update state of floater, and manage fade in/out
+		// called on scroll
+		var self = this;
+		if (!this.boxButtons || !this.boxFloater) return;
+		
+		var isVisible = this.isRectVisible( this.boxButtons[0].getBoundingClientRect() );
+		
+		if (isVisible) {
+			// box buttons are onscreen, so floater should go away
+			if (!this.boxFloater.hasClass('hidden')) {
+				this.boxFloater.addClass('hidden');
+				setTimeout( function() { self.boxFloater.addClass('gone'); }, 400 );
+			}
+		}
+		else {
+			// box buttons are offscreen, so floater should be visible
+			if (this.boxFloater.hasClass('gone')) {
+				this.boxFloater.removeClass('gone');
+				
+				var cont = this.firstBox[0].getBoundingClientRect();
+				var box = this.boxFloater[0].getBoundingClientRect();
+				
+				this.boxFloater.css({ left: cont.left, top: window.innerHeight - box.height, width: cont.width });
+				this.boxFloater[0].offsetWidth; // trigger dom reflow
+			}
+			if (this.boxFloater.hasClass('hidden')) this.boxFloater.removeClass('hidden');
+		}
 	}
 	
 	onResize() {
@@ -2933,6 +2992,8 @@ Page.Workflows = class Workflows extends Page.Events {
 		delete this.params;
 		delete this.limits;
 		delete this.actions;
+		
+		delete this.firstBox;
 		
 		this.div.html('');
 		return true;

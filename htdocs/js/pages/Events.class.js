@@ -680,7 +680,7 @@ Page.Events = class Events extends Page.PageUtils {
 				}
 				
 				var is_fav = !!(app.user.favorites && app.user.favorites.events && app.user.favorites.events.includes(event.id));
-				html += '<div id="btn_ve_fav" class="button right mobile_collapse ' + (is_fav ? 'favorite' : '') + '" onClick="$P().do_toggle_favorite()" title="Toggle Favorite"><i class="mdi mdi-'+(is_fav ? 'heart' : 'heart-plus-outline')+'">&nbsp;</i><span>Favorite</span></div>';
+				html += '<div id="btn_ve_fav" class="button right mobile_collapse mobile_hide ' + (is_fav ? 'favorite' : '') + '" onClick="$P().do_toggle_favorite()" title="Toggle Favorite"><i class="mdi mdi-'+(is_fav ? 'heart' : 'heart-plus-outline')+'">&nbsp;</i><span>Favorite</span></div>';
 				
 				html += '<div class="clear"></div>';
 			html += '</div>'; // title
