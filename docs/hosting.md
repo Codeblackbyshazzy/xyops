@@ -402,7 +402,8 @@ xySat is configured automatically via the xyOps conductor server.  The [satellit
 	"debug_level": 5,
 	"child_kill_timeout": 10,
 	"monitoring_enabled": true,
-	"quickmon_enabled": true
+	"quickmon_enabled": true,
+	"upgrade_timeout_sec": 60
 }
 ```
 
@@ -424,6 +425,7 @@ Here are descriptions of the configuration properties:
 | `child_kill_timeout` | Number | Number of seconds to wait after sending a SIGTERM to follow-up with a SIGKILL. |
 | `monitoring_enabled` | Boolean | Enable or disable the monitoring subsystem (i.e. send monitoring metrics every minute). |
 | `quickmon_enabled` | Boolean | Enable or disable the quick monitors, which send lightweight metrics every second. |
+| `upgrade_timeout_sec` | Number | The number of seconds to allow for upgrades to complete, before reporting an error (default: `60`). |
 
 ### Overriding The Connect URL
 
