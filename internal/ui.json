@@ -401,20 +401,22 @@
 		"d_ex_server": {
 			"label": "Select Server:",
 			"caption": "Select a server to load its data."
+		},
+		
+		"d_re_tags": {
+			"label": "Tags:",
+			"caption": "Optionally override the tags for running the event."
+		},
+		"fe_re_tags": {
+			"title": "Select tags for event",
+			"placeholder": "(Use event defaults)"
 		}
 	},
 	
 	"pages": {
 		
 		"Events": {
-			"d_re_tags": {
-				"label": "Tags:",
-				"caption": "Optionally override the tags for running the event."
-			},
-			"fe_re_tags": {
-				"title": "Select tags for event",
-				"placeholder": "(Use event defaults)"
-			}
+			
 		},
 		
 		"Workflows": {
@@ -1267,7 +1269,8 @@
 		{ "id": "log", "title": "Max Output Size", "icon": "file-remove-outline" },
 		{ "id": "queue", "title": "Max Queue Limit", "icon": "tray-full" },
 		{ "id": "retry", "title": "Max Retry Limit", "icon": "redo-variant" },
-		{ "id": "time", "title": "Max Run Time", "icon": "timer-remove-outline" }
+		{ "id": "time", "title": "Max Run Time", "icon": "timer-remove-outline" },
+		{ "id": "tag", "title": "Max Tag Limit", "icon": "tag-multiple-outline" }
 	],
 	
 	"workflow_node_types": [

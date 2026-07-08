@@ -2952,6 +2952,8 @@ Each limit has a `type` property which specifies what it governs.  The different
 | `retry` | **Max Retry Limit** | Set a maximum number of retries allowed for failed jobs.  The number of retries should be in a property named `amount`, and optionally the delay between retries should be in a property named `duration`, specified as seconds. |
 | `queue` | **Max Queue Limit** | Set a maximum number of jobs that may be queued up, if other limits prevent them from running concurrently.  The number should be in a property named `amount`. |
 | `file` | **Max File Limit** | Set a limit on the number and types of files allowed by the job.  This is a soft limit, and does not abort the job (the files are pruned if limits exceeded). |
+| `day` | **Max Daily Limit** | Quietly prevent additional job launches if a specific daily condition count has been reached for the event. |
+| `tag` | **Max Tag Limit** | Set a limit on the number of tags allowed on the job.  This is a soft limit, and does not abort the job (the tags are pruned if limits exceeded). |
 
 The **Max Run Time** (`time`), **Max Memory Limit** (`mem`), **Max CPU % Limit** (`cpu`) and **Max Output Size** (`log`) limit types all accept a set of additional parameters that enable special actions to take place when the limit is exceeded:
 

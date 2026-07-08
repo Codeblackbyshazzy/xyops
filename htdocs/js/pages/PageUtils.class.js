@@ -1392,6 +1392,19 @@ Page.PageUtils = class PageUtils extends Page.Base {
 				short_desc = commify(item.amount) + " x " + item.condition;
 				icon = 'calendar-cursor-outline';
 			break;
+			
+			case 'tag':
+				nice_title = "Max Tags";
+				if (!item.amount) {
+					nice_desc = "No tags allowed";
+					short_desc = "None";
+				}
+				else {
+					nice_desc = "Up to " + commify(item.amount) + " " + pluralize("tag", item.amount);
+					short_desc = commify(item.amount) + ' ' + pluralize("tag", item.amount);
+				}
+				icon = 'tag-multiple-outline';
+			break;
 		} // switch item.type
 		
 		return { nice_title, nice_desc, short_desc, icon };
@@ -1770,6 +1783,10 @@ Page.PageUtils = class PageUtils extends Page.Base {
 					limit.condition = $('#fe_erl_day_condition').val();
 					limit.amount = parseInt( $('#fe_erl_day_amount').val() );
 				break;
+				
+				case 'tag':
+					limit.amount = parseInt( $('#fe_erl_raw_amount').val() );
+				break;
 			} // switch limit.type
 			
 			Dialog.hide();
@@ -1808,7 +1825,7 @@ Page.PageUtils = class PageUtils extends Page.Base {
 				
 				case 'job':
 					$('#d_erl_raw_amount').show();
-					$('#s_erl_raw_amount_cap').html('Enter the maximum number to concurrent jobs to allow.');
+					$('#s_erl_raw_amount_cap').html('Enter the maximum number of concurrent jobs to allow.');
 					$('#d_erl_job_weight').show();
 				break;
 				
@@ -1834,6 +1851,11 @@ Page.PageUtils = class PageUtils extends Page.Base {
 				case 'day':
 					$('#d_erl_day_condition').show();
 					$('#d_erl_day_amount').show();
+				break;
+				
+				case 'tag':
+					$('#d_erl_raw_amount').show();
+					$('#s_erl_raw_amount_cap').html('Enter the maximum number of tags to allow on jobs.');
 				break;
 			} // switch new_type
 		}; // change_limit_type
@@ -5972,6 +5994,7 @@ Page.PageUtils = class PageUtils extends Page.Base {
 		var self = this;
 		var title = "Run Event";
 		var btn = ['run-fast', 'Run Now'];
+		var html = '';
 		app.clearError();
 		
 		if (typeof(event) == 'string') {
@@ -5979,86 +6002,130 @@ Page.PageUtils = class PageUtils extends Page.Base {
 			if (!event) return app.doError("Event not found.");
 		}
 		
-		var html = '';
-		html += `<div class="dialog_intro">You are about to manually launch a job for the event &ldquo;<b>${event.title}</b>&rdquo;.  Please enter values for all the event-defined parameters if applicable.</div>`;
-		html += '<div class="dialog_box_content scroll maximize">';
+		var category = find_object( app.categories, { id: event.category } );
+		if (!category) return app.doError("Cannot run event: Category not found: " + event.category);
+		
+		// create temp combo limits array, with full inheritance
+		var limits = [];
+		if (event.limits && event.limits.length) limits = limits.concat( event.limits );
+		if (category.limits && category.limits.length) limits = limits.concat( category.limits.filter( limit => limit.enabled ) );
+		
+		var temp_job_type = (event.type == 'workflow') ? 'workflow' : 'default';
+		if (config.job_universal_limits && config.job_universal_limits[temp_job_type]) {
+			limits = limits.concat( config.job_universal_limits[temp_job_type].filter( limit => limit.enabled && limit.type ) );
+		}
 		
 		// event may disallow files
 		var ok_show_files = true;
-		var limit = find_object( event.limits || [], { type: 'file', enabled: true } );
+		var limit = find_object( limits, { type: 'file', enabled: true } );
 		if (limit && (limit.amount == 0)) ok_show_files = false;
 		
-		if (ok_show_files) {
-			// user files
-			var cap_suffix = '';
-			if (limit) {
-				var limit_args = this.getResLimitDisplayArgs(limit);
-				cap_suffix += "  " + limit_args.nice_desc + " allowed.";
+		// event may disallow tags
+		var ok_show_tags = true;
+		var tag_limit = find_object( limits, { type: 'tag', enabled: true } );
+		if (tag_limit && (tag_limit.amount == 0)) ok_show_tags = false;
+		
+		// queue priority
+		var queue_limit = find_object( limits, { type: 'queue', enabled: true } );
+		var ok_show_priority = !!(queue_limit && queue_limit.amount);
+		
+		// show or hide params as needed
+		var ok_show_params = !!(event.fields && event.fields.length);
+		
+		if (ok_show_params || ok_show_files || ok_show_tags || ok_show_priority) {
+			// complex dialog with form fields
+			html += `<div class="dialog_intro">You are about to manually launch a job for the event &ldquo;<b>${event.title}</b>&rdquo;.`;
+			if (ok_show_params) html += `  Please enter values for all the event-defined parameters below.`;
+			html += `</div>`;
+			html += '<div class="dialog_box_content scroll maximize">';
+			
+			if (ok_show_files) {
+				// user files
+				var cap_suffix = '';
+				if (limit) {
+					var limit_args = this.getResLimitDisplayArgs(limit);
+					cap_suffix += "  " + limit_args.nice_desc + " allowed.";
+				}
+				
+				html += this.getFormRow({
+					label: 'User Files:',
+					content: this.getDialogFileUploader(limit),
+					caption: 'Optionally upload and attach files to the job.' + cap_suffix
+				});
 			}
 			
-			html += this.getFormRow({
-				label: 'User Files:',
-				content: this.getDialogFileUploader(limit),
-				caption: 'Optionally upload and attach files to the job.' + cap_suffix
-			});
+			if (ok_show_tags) {
+				// tags
+				html += this.getFormRow({
+					id: 'd_re_tags',
+					content: this.getFormMenuMulti({
+						id: 'fe_re_tags',
+						options: app.tags,
+						values: [],
+						default_icon: 'tag-outline',
+						// 'data-shrinkwrap': 1
+					})
+				});
+			}
+			
+			if (ok_show_priority) {
+				html += this.getFormRow({
+					label: 'Queue Hint:',
+					content: this.getFormCheckbox({
+						id: 'fe_re_priority',
+						label: 'High Priority',
+						checked: false
+					}),
+					caption: 'Optionally prioritize job so it jumps to the front of the queue (if applicable).'
+				});
+			}
+			
+			// user form fields
+			if (ok_show_params) {
+				html += this.getFormRow({
+					label: 'User Parameters:',
+					content: '<div class="plugin_param_editor_cont">' + this.getParamEditor(event.fields, {}) + '</div>',
+					// caption: 'Enter values for all the event-defined parameters here.'
+				});
+			}
+			
+			html += '</div>';
+		}
+		else {
+			// simple confirmation dialog
+			html += `Are you sure you want to manually launch a job for the event &ldquo;<b>${event.title}</b>&rdquo;?`;
 		}
 		
-		// tags
-		html += this.getFormRow({
-			id: 'd_re_tags',
-			content: this.getFormMenuMulti({
-				id: 'fe_re_tags',
-				options: app.tags,
-				values: [],
-				default_icon: 'tag-outline',
-				// 'data-shrinkwrap': 1
-			})
-		});
-		
-		// priority
-		var queue_limit = find_object( event.limits || [], { type: 'queue', enabled: true } );
-		var ok_show_priority = !!(queue_limit && queue_limit.amount);
-		if (ok_show_priority) {
-			html += this.getFormRow({
-				label: 'Queue Hint:',
-				content: this.getFormCheckbox({
-					id: 'fe_re_priority',
-					label: 'High Priority',
-					checked: false
-				}),
-				caption: 'Optionally prioritize job so it jumps to the front of the queue (if applicable).'
-			});
-		}
-		
-		// user form fields
-		html += this.getFormRow({
-			label: 'User Parameters:',
-			content: '<div class="plugin_param_editor_cont">' + this.getParamEditor(event.fields, {}) + '</div>',
-			// caption: 'Enter values for all the event-defined parameters here.'
-		});
-		
-		html += '</div>';
 		Dialog.confirm( title, html, btn, function(result) {
 			if (!result) return;
 			app.clearError();
 			
-			var fields = self.getParamValues(event.fields || []);
-			if (!fields) return; // validation error
-			
 			var job = deep_copy_object(event);
 			if (!job.params) job.params = {};
-			merge_hash_into( job.params, fields );
+			
+			if (ok_show_params) {
+				var fields = self.getParamValues(event.fields || []);
+				if (!fields) return; // validation error
+				merge_hash_into( job.params, fields );
+			}
+			
+			// add tags if specified
+			if (ok_show_tags) {
+				var tags = $('#fe_re_tags').val();
+				if (tags.length) {
+					job.tags = tags;
+					if (tag_limit && (tags.length > tag_limit.amount)) {
+						return app.badField('#fe_re_tags', "The selected tags exceed the event limit of " + commify(tag_limit.amount) + ".");
+					}
+				}
+			}
 			
 			// add files if user uploaded
 			if (self.dialogFiles && self.dialogFiles.length) {
 				if (!job.input) job.input = {};
 				job.input.files = self.dialogFiles;
-				delete self.dialogFiles;
+				delete self.dialogFiles; // destructive
 			}
-			
-			// add tags if specified
-			var tags = $('#fe_re_tags').val();
-			if (tags.length) job.tags = tags;
 			
 			// add priority if checked
 			if (ok_show_priority && $('#fe_re_priority').is(':checked')) job.priority = true;
