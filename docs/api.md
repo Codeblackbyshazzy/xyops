@@ -6374,6 +6374,8 @@ Emails are always sent from the [email_from](config.md#email_from) global config
 | `button` | String | Optional clickable button shown in the top-right corner (HTML emails only). |
 | `headers` | Object | Optional MIME headers to send along with the email, e.g. `{ "Importance": "High", "X-Priority": "1", "X-MSMail-Priority": "High" }`. |
 
+Please note that the `body` is always processed as Markdown.  While you can specify HTML (either inside of Markdown or on its own), the Markdown processor still treats the whole body as a Markdown document.  So avoid things like indenting your HTML tags (as Markdown will convert this to a plain text block).
+
 For the optional `button` parameter please use this syntax: `LABEL | URL`.  So for example: `Visit Disney | https://disney.com`.
 
 **Example:** Pure JSON POST (no files)
