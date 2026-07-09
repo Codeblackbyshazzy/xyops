@@ -1,5 +1,21 @@
 # xyOps Changelog
 
+## Version v1.0.80
+
+> July 9, 2026
+
+- [`53ea547b`](https://github.com/pixlcore/xyops/commit/53ea547b80bac2f4719177a965b1a1d58fd1c0d2): Version 1.0.80
+- [`0dbd7668`](https://github.com/pixlcore/xyops/commit/0dbd766878a64a63143db700110f7ef0afd2a4b7): Feature: Display workflow sub-jobs with an additional icon and indent, and sort jobs on the dashboard by parent relationship.  Fixes #362.
+- [`5d625afa`](https://github.com/pixlcore/xyops/commit/5d625afa0585e5bdb3f5333a77c344eba8c3d37f): Feature: Trigger Plugins can now enable/disable invisible mode for launched jobs.
+- [`b00afde2`](https://github.com/pixlcore/xyops/commit/b00afde275dde627ba9b390dcd57dbb587e8e652): Docs: Plugins: Added more clarity around text variants, and their use in toolsets.  Fixes #366.
+- [`056637ca`](https://github.com/pixlcore/xyops/commit/056637ca523204140e443354b05ce6848e9d1482): Feature: Bulk job deletion now traverses into workflows and auto-deletes all nested sub-jobs and sub-workflows.
+- [`d32e68b0`](https://github.com/pixlcore/xyops/commit/d32e68b042e94acd11afca8e49b9f4d34ed336b6): Docs: Recipes: Add link to wiki for more recipes.
+- [`df36b5c3`](https://github.com/pixlcore/xyops/commit/df36b5c3e92640bb10fdcb022c062970121b5a0c): Docs: Data: Add Event.type, missing trigger types, and update related descriptions in data structures.
+- [`0d80b0a0`](https://github.com/pixlcore/xyops/commit/0d80b0a0cac79ccc1de77afe2c90ad2d64c7fc5b): Feature: Customizable "Run Event" Dialog without User Files or Tags.  Fixes #363.
+- [`c4ce1c98`](https://github.com/pixlcore/xyops/commit/c4ce1c98dbb821dc0c289f7eb17c298d555d0dde): Bug Fix: Tag links inside job completion banner on details page have incorrect hrefs.  Fixes #365.
+- [`e4c9c7be`](https://github.com/pixlcore/xyops/commit/e4c9c7beab19901adc0428704d5adc24c0da8b9e): Bug Fix: Fix embedded web hook / email alert URLs.
+- [`5e6080cf`](https://github.com/pixlcore/xyops/commit/5e6080cf939fb09921fd0625e6b28cd96fbcba8b): Bug Fix: Linux Satellite Upgrade Script: Improve compatibility with older systemd versions.
+
 ## Version v1.0.79
 
 > July 7, 2026
