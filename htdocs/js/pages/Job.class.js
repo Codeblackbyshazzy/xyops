@@ -1792,7 +1792,7 @@ Page.Job = class Job extends Page.PageUtils {
 		if (!job.final) this.div.find('#d_live_status').html( strip_html( job.status || 'Job In Progress' ) );
 		
 		// simple 2D data table
-		if (job.table && job.table.header && job.table.rows) {
+		if (job.table && job.table.header && job.table.rows && Array.isArray(job.table.rows)) {
 			var $box = this.div.find('#d_job_user_table');
 			$box.show();
 			

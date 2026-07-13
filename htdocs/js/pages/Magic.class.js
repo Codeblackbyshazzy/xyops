@@ -459,7 +459,7 @@ Page.Magic = class Magic extends Page.PageUtils {
 		html += '</div>';
 		
 		// simple 2D data table
-		if (job.table && job.table.header && job.table.rows) {
+		if (job.table && job.table.header && job.table.rows && Array.isArray(job.table.rows)) {
 			html += '<div class="magic_section">';
 			if (job.table.title) {
 				html += '<div class="dialog_title">' + encode_entities(job.table.title) + '</div>';
