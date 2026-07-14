@@ -1,5 +1,19 @@
 # xyOps Changelog
 
+## Version v1.0.82
+
+> July 14, 2026
+
+- [`3292a11e`](https://github.com/pixlcore/xyops/commit/3292a11e110be01ed338aab0d75618df5617d9cb): Version 1.0.82
+- [`4e05da1e`](https://github.com/pixlcore/xyops/commit/4e05da1eea9a3ae1810c30416a39f5cf6b9d1642): Bug Fixes: Fix a number of small API validation issues, and documentation errors.
+- [`0700d7da`](https://github.com/pixlcore/xyops/commit/0700d7da6cb3dbab5525945cac5bb7afdadc1411): Bug Fix: Add server hostname regex validation in create_group and update_group APIs.
+- [`83a1f95b`](https://github.com/pixlcore/xyops/commit/83a1f95b1603569d552fbed264d62957132f03fa): Bug Fix: Typo in api_watch_group error path.
+- [`29c21a87`](https://github.com/pixlcore/xyops/commit/29c21a872aa96b6c630f6db3b9757fd98fb23b5d): Bug Fix: Missing return call before doError in api_upload_job_file.
+- [`b086dd76`](https://github.com/pixlcore/xyops/commit/b086dd76d272323a51062d7fecd5ea0f86d60f4c): Bug Fix: Prevent crasher when job user content `table.rows` is not an array.
+- [`542669b0`](https://github.com/pixlcore/xyops/commit/542669b00ad2ecd3cdba61799abe347cd99d37cf): Bug Fix: upload_files API: Allow usage by API Key as well as user session.
+- [`421088e1`](https://github.com/pixlcore/xyops/commit/421088e17dc475e98b3f1af12c9a0c177c76f886): Feature: Add client.run_event_dialog global configuration, for hiding specific dialog sections.
+- [`2d098d35`](https://github.com/pixlcore/xyops/commit/2d098d35d1dcb45cd0d91d8752948cc49b50a9e1): Feature: Config Editor: Update local client configuration on save.
+
 ## Version v1.0.81
 
 > July 10, 2026
