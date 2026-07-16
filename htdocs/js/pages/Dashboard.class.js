@@ -474,7 +474,7 @@ Page.Dashboard = class Dashboard extends Page.PageUtils {
 		
 		var opts = {
 			rows: events,
-			cols: ['Event Title', 'Category', 'Tags', 'Plugin', 'Targets', 'Triggers', 'Status', 'Actions'],
+			cols: ['Event Title', 'Category', 'Tags', 'Plugin', 'Targets', 'Triggers', 'Modified', 'Status', 'Actions'],
 			data_type: 'event'
 		};
 		
@@ -494,6 +494,7 @@ Page.Dashboard = class Dashboard extends Page.PageUtils {
 				(item.plugin == '_workflow') ? '(Workflow)' : self.getNicePlugin(item.plugin, true),
 				self.getNiceTargetList(item.targets, true),
 				summarize_event_timings(item),
+				self.getRelativeDateTime(item.modified),
 				
 				'<div id="d_el_jt_status_' + item.id + '">' + self.getNiceEventStatus(item) + '</div>',
 				

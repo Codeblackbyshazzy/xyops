@@ -310,8 +310,8 @@ Page.Events = class Events extends Page.PageUtils {
 			sort_by: 'cat_sort',
 			sort_dir: 1,
 			filter: this.isRowVisible.bind(this),
-			column_ids: ['title', 'cat_sort', 'tag_sort', 'plug_sort', 'target_sort', 'timing_sort', 'status_sort', '' ],
-			column_labels: ['Event Title', 'Category', 'Tags', 'Plugin', 'Targets', 'Triggers', 'Status', 'Actions']
+			column_ids: ['title', 'cat_sort', 'tag_sort', 'plug_sort', 'target_sort', 'timing_sort', 'modified', 'status_sort', '' ],
+			column_labels: ['Event Title', 'Category', 'Tags', 'Plugin', 'Targets', 'Triggers', 'Modified', 'Status', 'Actions']
 		};
 		
 		var last_item = null;
@@ -333,6 +333,7 @@ Page.Events = class Events extends Page.PageUtils {
 				(item.plugin == '_workflow') ? '(Workflow)' : self.getNicePlugin(item.plugin, true),
 				self.getNiceTargetList(item.targets, true),
 				item.timing_sort,
+				self.getRelativeDateTime(item.modified),
 				
 				'<div id="d_el_jt_status_' + item.id + '">' + self.getNiceEventStatus(item) + '</div>',
 				
@@ -774,7 +775,7 @@ Page.Events = class Events extends Page.PageUtils {
 				if (event.notes) {
 					html += '<div class="summary_grid" style="grid-template-columns: 1fr; margin-top:30px;"><div>';
 					html += `<div class="info_label">${thing} Notes</div>`;
-					html += '<div class="info_value overflow" style="font-weight:normal; line-height:16px;">' + event.notes.replace(/\n/g, '<br>') + '</div>';
+					html += '<div class="info_value overflow" style="font-weight:normal; line-height:16px;">' + strip_html(event.notes).replace(/\n/g, '<br>') + '</div>';
 					html += '</div></div>';
 				}
 			html += '</div>'; // box content
